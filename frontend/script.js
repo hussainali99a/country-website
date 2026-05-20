@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/country";
+const API_URL = "/api/country";
 
 async function searchCountry() {
   const name = document.getElementById("countryInput").value.trim();
