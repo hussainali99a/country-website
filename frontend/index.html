@@ -1,34 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Advanced Country Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Explore countries around the world - discover flags, languages, currencies, and more." />
+  <title>Advanced Country Explorer - Discover the World</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <div class="container">
+    <header class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">🌍 Country Explorer</h1>
+        <p class="hero-subtitle">Discover information about countries worldwide</p>
+        <p class="hero-description">Search by country name and continent to find flags, languages, currencies,
+          population, and more.</p>
+      </div>
 
-  <section class="hero">
-    <h1>🌍Advanced Country Explorer 🚀</h1>
-    <p>Search countries by name and continent to discover flags, languages, currencies, population, area and more.</p>
+      <div class="search-box">
+        <div class="search-wrapper">
+          <input type="text" id="countryInput" class="search-input" placeholder="Enter country name (e.g., Japan)"
+            autocomplete="off" />
+          <span class="search-icon">🔍</span>
+        </div>
 
-    <div class="search-box">
-      <input type="text" id="countryInput" placeholder="Enter country name" />
+        <select id="continentSelect" class="continent-select">
+          <option value="">All Continents</option>
+          <option value="Africa">🌍 Africa</option>
+          <option value="Americas">🌎 Americas</option>
+          <option value="Asia">🌏 Asia</option>
+          <option value="Europe">🇪🇺 Europe</option>
+          <option value="Oceania">🏝️ Oceania</option>
+        </select>
 
-      <select id="continentSelect">
-        <option value="">Select Continent</option>
-        <option value="Africa">Africa</option>
-        <option value="Americas">Americas</option>
-        <option value="Asia">Asia</option>
-        <option value="Europe">Europe</option>
-        <option value="Oceania">Oceania</option>
-      </select>
+        <button id="searchBtn" class="search-btn">Search</button>
+      </div>
+    </header>
 
-      <button onclick="searchCountry()">Search</button>
-    </div>
-  </section>
+    <main id="result" class="result"></main>
 
-  <section id="result" class="result"></section>
+    <footer class="footer">
+      <p>Built with ❤️ | Data from REST Countries & Wikipedia</p>
+    </footer>
+  </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>

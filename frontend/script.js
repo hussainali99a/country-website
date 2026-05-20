@@ -1,16 +1,30 @@
 const API_URL = "/api/country";
 
+const countryInput = document.getElementById("countryInput");
+const continentSelect = document.getElementById("continentSelect");
+const searchBtn = document.getElementById("searchBtn");
+const result = document.getElementById("result");
+
+// Keyboard support - search on Enter key
+countryInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    searchCountry();
+  }
+});
+
+// Button click handler
+searchBtn.addEventListener("click", searchCountry);
+
 async function searchCountry() {
-  const name = document.getElementById("countryInput").value.trim();
-  const continent = document.getElementById("continentSelect").value;
-  const result = document.getElementById("result");
+  const name = countryInput.value.trim();
+  const continent = continentSelect.value;
 
   if (!name || !continent) {
-    result.innerHTML = `<div class="error">Please enter country name and select continent.</div>`;
+    result.innerHTML = `<div class="error">❌ Please enter country name and select continent.</div>`;
     return;
   }
 
-  result.innerHTML = `<div class="error">Loading country data...</div>`;
+  result.innerHTML = `<div class="loading">⏳ Loading country data...</div>`;
 
   try {
     const response = await fetch(
