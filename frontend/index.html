@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Advanced Country Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <section class="hero">
+    <h1>🌍 Advanced Country Explorer</h1>
+    <p>Search countries by name and continent to discover flags, languages, currencies, population, area and more.</p>
+
+    <div class="search-box">
+      <input type="text" id="countryInput" placeholder="Enter country name" />
+
+      <select id="continentSelect">
+        <option value="">Select Continent</option>
+        <option value="Africa">Africa</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+
+      <button onclick="searchCountry()">Search</button>
+    </div>
+  </section>
+
+  <section id="result" class="result"></section>
+
+  <script src="script.js"></script>
+</body>
+</html>
