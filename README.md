@@ -108,34 +108,61 @@ The CI/CD pipeline ensures code quality and enables seamless deployment of updat
 ### Project Workflow Diagram
 
 ```mermaid
-graph TB
-    subgraph Development["Development"]
-        A["Developer"] -->|Push Code| B["GitHub Repository"]
-    end
+graph LR
+    Start([Developer Pushes Code]) -->|Git Commit| Repo["📦<br/>GitHub Repository"]
     
-    subgraph CI["CI/CD Pipeline - GitHub Actions"]
-        C["Trigger Deploy Workflow"] -->|On Push| D["Build Backend"]
-        D -->|npm install| E["Install Dependencies"]
-        E -->|Run Tests| F["Validate Code"]
-        F -->|Build Success| G["Build Frontend"]
-        G -->|Bundle Assets| H["Prepare Deployment"]
-    end
+    Repo -->|Webhook Trigger| GA["⚙️ GitHub Actions<br/>Workflow Triggered"]
     
-    subgraph Production["Production"]
-        H -->|Deploy| I["Backend Server<br/>Node.js API"]
-        H -->|Deploy| J["Frontend Application<br/>Static Files"]
-        K["Wikipedia API"] -.->|Fetch Data| I
-        I -->|API Endpoints| J
-        J -->|Display Countries| L["User Browser"]
-    end
+    GA -->|1| Checkout["📥 Checkout Code<br/>Pull Repository"]
+    Checkout -->|2| NodeSetup["🔧 Setup Node.js<br/>v14+"]
+    NodeSetup -->|3| BackendDeps["📚 Backend Setup<br/>npm install"]
+    BackendDeps -->|4| BackendBuild["🏗️ Build Backend<br/>Validate & Test"]
     
-    B -->|Webhook| C
-    style A fill:#e1f5ff
-    style L fill:#c8e6c9
-    style C fill:#fff3e0
-    style I fill:#f3e5f5
-    style J fill:#f3e5f5
+    BackendBuild -->|5| FrontendDeps["📚 Frontend Setup<br/>Bundle Assets"]
+    FrontendDeps -->|6| FrontendBuild["🎨 Build Frontend<br/>Optimize Files"]
+    
+    FrontendBuild -->|All Checks Passed| Quality["✅ Quality Gate<br/>Passed"]
+    Quality -->|Approval| Deploy["🚀 Deploy to<br/>Production"]
+    
+    Deploy -->|Backend| ProdBackend["🖥️ Backend Server<br/>Node.js API Port 3000"]
+    Deploy -->|Frontend| ProdFrontend["💻 Frontend Server<br/>Static Files"]
+    
+    ProdBackend -->|Fetch Data| Wiki["🌐 Wikipedia API<br/>Country Information"]
+    ProdFrontend -->|API Calls| ProdBackend
+    ProdFrontend -->|Display| Browser["👤 User Browser<br/>Display Countries"]
+    
+    Browser -.->|User Interaction| ProdFrontend
+    
+    style Start fill:#007AFF,stroke:#004C99,stroke-width:2px,color:#fff
+    style Repo fill:#28A745,stroke:#1B6B2F,stroke-width:2px,color:#fff
+    style GA fill:#FF6B35,stroke:#CC5528,stroke-width:2px,color:#fff
+    style Checkout fill:#4A90E2,stroke:#2E5C8A,stroke-width:2px,color:#fff
+    style NodeSetup fill:#4A90E2,stroke:#2E5C8A,stroke-width:2px,color:#fff
+    style BackendDeps fill:#6C63FF,stroke:#4A3F99,stroke-width:2px,color:#fff
+    style BackendBuild fill:#6C63FF,stroke:#4A3F99,stroke-width:2px,color:#fff
+    style FrontendDeps fill:#F46B9D,stroke:#B84A6F,stroke-width:2px,color:#fff
+    style FrontendBuild fill:#F46B9D,stroke:#B84A6F,stroke-width:2px,color:#fff
+    style Quality fill:#00D084,stroke:#009B5C,stroke-width:2px,color:#fff
+    style Deploy fill:#FF6B35,stroke:#CC5528,stroke-width:2px,color:#fff
+    style ProdBackend fill:#9B59B6,stroke:#6C3F7C,stroke-width:2px,color:#fff
+    style ProdFrontend fill:#E67E22,stroke:#A55A17,stroke-width:2px,color:#fff
+    style Wiki fill:#1ABC9C,stroke:#0C7A6B,stroke-width:2px,color:#fff
+    style Browser fill:#34495E,stroke:#1C2833,stroke-width:2px,color:#fff
 ```
+
+#### Pipeline Stages
+
+| Stage | Description |
+|-------|-------------|
+| **Code Push** | Developer commits and pushes changes to GitHub |
+| **Workflow Trigger** | GitHub Actions automatically triggers on push event |
+| **Code Checkout** | Clone repository in the runner environment |
+| **Environment Setup** | Install Node.js and required runtime dependencies |
+| **Backend Build** | Install dependencies and validate backend code |
+| **Frontend Build** | Bundle and optimize frontend assets |
+| **Quality Gate** | All tests and validation checks passed |
+| **Deployment** | Deploy both backend and frontend to production |
+| **Runtime** | Backend serves API, Frontend displays to users, Wikipedia data integration |
 
 ## Contributing
 
